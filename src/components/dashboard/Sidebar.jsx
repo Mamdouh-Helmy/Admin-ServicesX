@@ -11,7 +11,10 @@ import {
   ChevronLeft,
   X,
   Activity,
-  Zap
+  Zap,
+  FileText,
+  HelpCircle,
+  Headphones
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext.jsx';
 import { useNotification } from '../../context/NotificationContext.jsx';
@@ -28,6 +31,9 @@ const Sidebar = ({ isOpen, onClose, isMobile }) => {
     { icon: List, label: 'عرض الخدمات', path: '/dashboard/services', color: 'text-purple-600' },
     { icon: Code, label: 'إنشاء كود', path: '/dashboard/create-code', color: 'text-orange-600' },
     { icon: Package, label: 'عرض الأكواد', path: '/dashboard/codes', color: 'text-teal-600' },
+    { icon: FileText, label: 'سياسة الاستخدام', path: '/dashboard/privacy-policy', color: 'text-indigo-600' },
+    { icon: HelpCircle, label: 'الأسئلة الشائعة', path: '/dashboard/faq', color: 'text-emerald-600' },
+    { icon: Headphones, label: 'الدعم الفني', path: '/dashboard/support', color: 'text-cyan-600' },
   ];
 
   const handleLogout = () => {
@@ -46,16 +52,16 @@ const Sidebar = ({ isOpen, onClose, isMobile }) => {
         />
       )}
 
-      {/* التعديل الرئيسي هنا: استخدام hidden للأجهزة المحمولة عندما تكون القائمة مغلقة */}
+      {/* Sidebar Container */}
       <div
         className={`
-          fixed top-0 right-0 h-full bg-white shadow-2xl transition-all duration-300 z-50
-          border-l border-gray-200
+          fixed top-0 right-0 h-screen bg-white shadow-2xl transition-all duration-300 z-50
+          border-l border-gray-200 flex flex-col
           ${isMobile ? (isOpen ? 'w-full' : 'hidden') : (isOpen ? 'w-64 md:w-72' : 'w-20')}
         `}
       >
         {/* Header */}
-        <div className="p-4 md:p-6 border-b border-gray-100 bg-gradient-to-r from-blue-600 to-indigo-700">
+        <div className="p-4 md:p-6 border-b border-gray-100 bg-gradient-to-r from-blue-600 to-indigo-700 flex-shrink-0">
           <div className="flex items-center justify-between">
             {isOpen && (
               <div className="flex items-center space-x-3 space-x-reverse">
@@ -84,8 +90,8 @@ const Sidebar = ({ isOpen, onClose, isMobile }) => {
           </div>
         </div>
 
-        {/* باقي محتوى الـ sidebar بدون تغيير */}
-        <div className="p-4 md:p-6 border-b border-gray-100">
+        {/* User Profile */}
+        <div className="p-4 md:p-6 border-b border-gray-100 flex-shrink-0">
           <div className="flex items-center justify-center space-x-3 space-x-reverse">
             <div className="relative">
               <div className="w-10 h-10 md:w-11 md:h-11 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg m-auto">
@@ -110,50 +116,54 @@ const Sidebar = ({ isOpen, onClose, isMobile }) => {
           </div>
         </div>
 
-        <nav className="flex-1 p-3 md:p-4 space-y-1 md:space-y-2 overflow-y-auto">
-          {menuItems.map((item) => {
-            const Icon = item.icon;
-            const isActive = location.pathname === item.path;
+        {/* Scrollable Menu Items */}
+        <div className="flex-1 overflow-y-auto">
+          <nav className="p-3 md:p-4 space-y-1 md:space-y-2">
+            {menuItems.map((item) => {
+              const Icon = item.icon;
+              const isActive = location.pathname === item.path;
 
-            return (
-              <Link
-                key={item.path}
-                to={item.path}
-                className={`
-                  group flex items-center w-full space-x-3 space-x-reverse p-2 md:p-3 rounded-lg md:rounded-xl
-                  transition-all duration-200 relative overflow-hidden
-                  ${isActive
-                    ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg'
-                    : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
-                  }
-                  ${!isOpen && 'justify-center'}
-                `}
-                onClick={isMobile ? onClose : undefined}
-              >
-                <div className={`
-                  p-1.5 md:p-2 rounded-md md:rounded-lg transition-colors 
-                  ${isActive ? 'bg-white/20' : 'group-hover:bg-gray-100'}
-                `}>
-                  <Icon className={`w-4 h-4 ${isActive ? 'text-white' : item.color}`} />
-                </div>
-
-                {isOpen && (
-                  <span className={`font-medium text-sm md:text-base transition-colors ${isActive ? 'text-white' : 'text-gray-700 group-hover:text-gray-900'}`}>
-                    {item.label}
-                  </span>
-                )}
-
-                {!isOpen && (
-                  <div className="absolute right-14 bg-gray-900 text-white px-2 py-1 rounded-lg text-xs opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
-                    {item.label}
+              return (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className={`
+                    group flex items-center w-full space-x-3 space-x-reverse p-2 md:p-3 rounded-lg md:rounded-xl
+                    transition-all duration-200 relative overflow-hidden
+                    ${isActive
+                      ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg'
+                      : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                    }
+                    ${!isOpen && 'justify-center'}
+                  `}
+                  onClick={isMobile ? onClose : undefined}
+                >
+                  <div className={`
+                    p-1.5 md:p-2 rounded-md md:rounded-lg transition-colors 
+                    ${isActive ? 'bg-white/20' : 'group-hover:bg-gray-100'}
+                  `}>
+                    <Icon className={`w-4 h-4 ${isActive ? 'text-white' : item.color}`} />
                   </div>
-                )}
-              </Link>
-            );
-          })}
-        </nav>
 
-        <div className="p-3 md:p-4 border-t border-gray-100 space-y-1 md:space-y-2">
+                  {isOpen && (
+                    <span className={`font-medium text-sm md:text-base transition-colors ${isActive ? 'text-white' : 'text-gray-700 group-hover:text-gray-900'}`}>
+                      {item.label}
+                    </span>
+                  )}
+
+                  {!isOpen && (
+                    <div className="absolute right-14 bg-gray-900 text-white px-2 py-1 rounded-lg text-xs opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
+                      {item.label}
+                    </div>
+                  )}
+                </Link>
+              );
+            })}
+          </nav>
+        </div>
+
+        {/* Bottom Buttons */}
+        <div className="p-3 md:p-4 border-t border-gray-100 space-y-1 md:space-y-2 flex-shrink-0">
           <button
             className={`
               group flex items-center space-x-3 space-x-reverse p-2 md:p-3 rounded-lg md:rounded-xl

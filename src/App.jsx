@@ -17,6 +17,9 @@ import AddService from './components/dashboard/AddService.jsx';
 import Services from './components/dashboard/Services.jsx';
 import CreateCode from './components/dashboard/CreateCode.jsx';
 import Codes from './components/dashboard/Codes.jsx';
+import PrivacyPolicy from './components/dashboard/PrivacyPolicy.jsx';
+import FAQ from './components/dashboard/FAQ.jsx';
+import Support from './components/dashboard/Support.jsx';
 
 // Loading Spinner
 import LoadingSpinner from './components/common/LoadingSpinner.jsx';
@@ -63,6 +66,9 @@ function App() {
         <Route path="services" element={<Services />} />
         <Route path="create-code" element={<CreateCode />} />
         <Route path="codes" element={<Codes />} />
+        <Route path="privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="faq" element={<FAQ />} />
+        <Route path="support" element={<Support />} />
       </Route>
 
       {/* Catch all route */}

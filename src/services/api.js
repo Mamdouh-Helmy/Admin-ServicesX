@@ -256,7 +256,6 @@ class ApiService {
   }
 
   // Users endpoints
-  // في قسم Users endpoints في api.js
   async getUsers() {
     return this.request("/Admin/dashboard-stats");
   }
@@ -273,6 +272,19 @@ class ApiService {
   // Activity endpoints
   async getRecentActivities() {
     return this.request("/activities/recent");
+  }
+
+  // Support endpoint
+  async sendSupportMessage(messageData) {
+    const response = await this.request("/Support/send", {
+      method: "POST",
+      body: JSON.stringify(messageData),
+    });
+
+    // Log activity after successful support message
+    this.logActivity("support", "تم إرسال رسالة للدعم الفني", messageData.Message);
+
+    return response;
   }
 
   // Log activity to localStorage (since we don't have a backend endpoint yet)

@@ -7,4 +7,11 @@ export default defineConfig({
   optimizeDeps: {
     exclude: ['lucide-react'],
   },
+  base: '/Admin-ServicesX/',
+    build: {
+    outDir: 'dist'
+  },
+  server: {
+    historyApiFallback: true
+  },
 });
